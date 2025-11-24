@@ -1,0 +1,147 @@
+```markdown
+# Threat Intelligence Report: Scattered Spider Analysis
+
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Executive Summary](#executive-summary)
+- [Threat Actor Profile](#threat-actor-profile)
+- [Indicators of Compromise](#indicators-of-compromise)
+- [MITRE ATT&CK Mapping](#mitre-attck-mapping)
+- [MISP Implementation](#misp-implementation)
+- [Detection Recommendations](#detection-recommendations)
+- [SOC Alerting Strategy](#soc-alerting-strategy)
+- [Conclusion](#conclusion)
+- [References](#references)
+
+## Project Overview
+**Project:** Advanced Threat Actor Profiling  
+**Analyst:** Nyerovwo Obarueroro  
+**Date:** November 18, 2025  
+**Threat Level:** High  
+
+## Executive Summary
+
+Scattered Spider represents one of the most sophisticated cybercriminal threats targeting enterprises today. This English-speaking group, composed mainly of individuals aged 16-25, has evolved from basic credential theft to executing high-impact ransomware attacks across multiple sectors including hospitality, retail, telecommunications, and critical infrastructure.
+
+Their unique ability to bypass multi-factor authentication through advanced social engineering makes them a "post-MFA" threat actor that requires immediate defensive attention.
+
+## Threat Actor Profile
+
+| **Attribute** | **Details** |
+|---------------|-------------|
+| **Primary Aliases** | UNC3944, Muddled Libra, Octo Tempest, StarFraud, Scatter Swin |
+| **Type** | Financially motivated cybercriminal group / Ransomware affiliate |
+| **Motivation** | Financial gain through ransomware operations and data extortion |
+| **Target Sectors** | Hospitality, Entertainment, Retail, Telecommunications, Technology, Financial Services, MSPs |
+| **Operational Focus** | Social engineering, identity system compromise, initial access brokerage |
+
+## Indicators of Compromise
+
+### IP Addresses
+```
+185.208.156.251
+84.200.205.9
+137.220.43.146
+149.248.8.85
+149.28.41.193
+2a01:4f8:200:1097::2 (IPv6 for data exfiltration)
+```
+
+### Malicious Domains
+**Recent Phishing Domains:**
+- `complete-sendgrid[.]com`
+- `aws-us3-manageprod[.]com`
+- `targetsname-sso[.]com`
+- `oktalogin-targetcompany[.]com`
+
+### File Hashes
+**MD5:**
+```
+1155560e1e4ea8fcce047514a52950859
+192644d5f4fc2313bca0224210c0b6c7
+```
+
+**SHA256:**
+```
+3ea2d190879c8933363b222c686009b81ba8af9eb6ae3696d2f420e187467f08
+4188736108d2b73b57f63c0b327fb5119f82e94ff2d6cd51e9ad92093023ec93
+```
+
+### Exploited Vulnerabilities
+- CVE-2021-35464
+- CVE-2023-35199
+- CVE-2024-3400
+
+## MITRE ATT&CK Mapping
+
+| Tactic | Technique ID | Description |
+|--------|--------------|-------------|
+| Reconnaissance | T1589.001 | Gather Victim Identity Information |
+| Initial Access | T1660 | Social Engineering via SMS phishing |
+| Credential Access | T1621 | Multi-Factor Authentication Request Generation |
+| Credential Access | T1555.005 | Credentials from Password Stores |
+| Lateral Movement | T1021.001 | Remote Desktop Protocol |
+| Persistence | T1087 | Cloud Accounts |
+| Impact | T1486 | Data Encrypted for Impact |
+
+## MISP Implementation
+
+- ✅ Created dedicated Scattered Spider event
+- ✅ Imported all IOCs via Freetext Import
+- ✅ Applied `OSINT:Scattered-Spider` taxonomy tags
+- ✅ Mapped to MITRE ATT&CK framework
+- ✅ Published for correlation and analysis
+
+## Detection Recommendations
+
+### 1. Identity & Access Controls
+- Enforce phishing-resistant MFA across all accounts
+- Monitor for suspicious authentication patterns
+- Alert on MFA reset/enrollment modifications
+
+### 2. Endpoint Security
+- Restrict RMM tools (AnyDesk, TeamViewer, Splashtop)
+- Monitor for unusual RDP connections
+- Implement application allowlisting
+
+### 3. Network Monitoring
+- Block known malicious IPs and domains
+- DNS filtering for phishing domains
+- Monitor for data exfiltration patterns
+
+### 4. Cloud Security
+- Monitor SaaS configuration changes
+- Alert on unusual API calls in cloud environments
+- Restrict legacy authentication protocols
+
+## SOC Alerting Strategy
+
+```yaml
+High Priority Alerts:
+  - Multiple MFA push notifications in short timeframe
+  - RDP connections from unknown IP ranges
+  - Suspicious cloud tenant configuration changes
+  - Data transfers to known malicious IPs
+  
+Medium Priority Alerts:
+  - New device registrations in identity providers
+  - Unusual remote management tool usage
+  - Access to sensitive data stores from new locations
+```
+
+## Conclusion
+
+Scattered Spider represents a persistent and adaptive threat in the cybersecurity landscape. Their demonstrated ability to consistently bypass multi-factor authentication and execute sophisticated social engineering attacks positions them as a highly dangerous, "post-MFA" adversary.
+
+Defending against this advanced threat requires a proactive and layered security approach. Organizations must move beyond conventional perimeter defenses and assume determined adversaries will breach standard controls. The recommendations outlined in this report provide a critical framework for building resilience against this sophisticated threat actor.
+
+## References
+- MITRE ATT&CK Framework
+- MISP Threat Intelligence Platform
+- OSINT Security Feeds
+- Malware Patrol Reporting
+
+---
+
+```
+
